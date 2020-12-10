@@ -6,10 +6,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.eclipse.microprofile.opentracing.Traced;
+
 import airhacks.Boundary;
 import airhacks.catalog.control.Catalog;
 import io.quarkus.runtime.Startup;
 
+@Traced
 @Boundary
 @Path("deliveries")
 public class GreetingResource {
@@ -26,6 +29,6 @@ public class GreetingResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return "Hello RESTEasy -> " + this.catalog.catalog();
+        return "Here is your gift -> " + this.catalog.catalog();
     }
 }
