@@ -9,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
@@ -33,16 +34,16 @@ public class CatalogResource {
     @GET
     @Bulkhead(value = 2,waitingTaskQueue = 2)
     @Produces(MediaType.APPLICATION_JSON)
-    public Gift gifts() {
+    public Response gifts() {
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
         }
-        return new Gift(this.gift, 13);
+        return Response.status(201).entity(new Gift(this.gift, 13)).build();
     }
     
-    public Gift overloaded() {
-        return new Gift("no", -1);
+    public Response overloaded() {
+        return Response.status(503).header("reason", "problems...").build();
     }
 
     @POST
