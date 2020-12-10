@@ -6,16 +6,22 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.eclipse.microprofile.rest.client.inject.RestClient;
-
+import airhacks.Boundary;
 import airhacks.catalog.control.Catalog;
-import airhacks.catalog.control.CatalogResourceClient;
+import io.quarkus.runtime.Startup;
 
+@Boundary
 @Path("deliveries")
 public class GreetingResource {
 
     @Inject
     Catalog catalog;
+
+    //migration of @Startup @Singleton
+    @Startup
+    public void name() {
+        System.out.println("start me up");
+    }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
