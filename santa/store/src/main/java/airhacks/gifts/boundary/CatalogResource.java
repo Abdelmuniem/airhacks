@@ -1,5 +1,7 @@
 package airhacks.gifts.boundary;
 
+import java.time.temporal.ChronoUnit;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -11,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 
 import airhacks.gifts.entity.Gift;
@@ -25,6 +28,7 @@ public class CatalogResource {
     String gift;
 
 
+    @Timeout(value = 1,unit = ChronoUnit.SECONDS)
     @Fallback(fallbackMethod = "overloaded")
     @GET
     @Bulkhead(value = 2,waitingTaskQueue = 2)

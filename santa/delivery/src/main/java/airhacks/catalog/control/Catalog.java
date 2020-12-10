@@ -2,7 +2,9 @@ package airhacks.catalog.control;
 
 import javax.inject.Inject;
 
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
@@ -19,6 +21,8 @@ public class Catalog {
     @Inject
     GiftEstimator estimator;
 
+    @CircuitBreaker
+    @Retry(maxRetries = 2)
     @Fallback(fallbackMethod = "tooSlow")
     @SimplyTimed(tags = "layer=control")
     public String catalog() {
