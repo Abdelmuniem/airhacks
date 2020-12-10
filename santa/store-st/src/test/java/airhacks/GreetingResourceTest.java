@@ -17,10 +17,16 @@ public class GreetingResourceTest {
     @RestClient
     CatalogResourceClient resourceClient;
 
+    @Inject
+    @RestClient
+    MetricsResource metricsClient;
+
     @Test
     public void catalog() {
         var catalog = this.resourceClient.catalog();
         System.out.println("GreetingResourceTest.enclosing_method() " + catalog);
+        var metrics = this.metricsClient.metrics();
+        System.out.println("GreetingResourceTest.catalog() " + metrics);
     }
 
 }

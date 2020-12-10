@@ -8,18 +8,18 @@ import javax.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import airhacks.catalog.control.Catalog;
 import airhacks.catalog.control.CatalogResourceClient;
 
 @Path("deliveries")
 public class GreetingResource {
 
     @Inject
-    @RestClient
-    CatalogResourceClient client;
+    Catalog catalog;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return "Hello RESTEasy -> " + client.catalog();
+        return "Hello RESTEasy -> " + this.catalog.catalog();
     }
 }
