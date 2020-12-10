@@ -12,13 +12,10 @@ public class GreetingResource {
     @Inject
     HelloService hs;
 
-    @Inject
-    Contract contract;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        contract.execute();
-        return "Hello RESTEasy " + this.hs.hello();
+        return "Hello airhackers " + this.hs.hello();
     }
 }
