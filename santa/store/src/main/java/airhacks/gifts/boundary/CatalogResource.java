@@ -9,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.faulttolerance.Bulkhead;
+import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 
 import airhacks.gifts.entity.Gift;
@@ -23,13 +25,20 @@ public class CatalogResource {
     String gift;
 
 
+    @Fallback(fallbackMethod = "overloaded")
     @GET
+    @Bulkhead(value = 2,waitingTaskQueue = 2)
     @Produces(MediaType.APPLICATION_JSON)
     public Gift gifts() {
         try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {}
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+        }
         return new Gift(this.gift, 13);
+    }
+    
+    public Gift overloaded() {
+        return new Gift("no", -1);
     }
 
     @POST
