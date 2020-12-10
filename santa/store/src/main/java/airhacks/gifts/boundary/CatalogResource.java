@@ -26,6 +26,9 @@ public class CatalogResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Gift gifts() {
+        try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {}
         return new Gift(this.gift, 13);
     }
 
