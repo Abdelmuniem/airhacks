@@ -1,4 +1,4 @@
-package airhacks;
+package airhacks.catalog.control;
 
 import javax.json.JsonObject;
 import javax.ws.rs.GET;
@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @Path("catalog")
-@RegisterRestClient(baseUri = "http://localhost:8282")
+@RegisterRestClient(configKey = "store")
 public interface CatalogResourceClient {
     
     @GET
