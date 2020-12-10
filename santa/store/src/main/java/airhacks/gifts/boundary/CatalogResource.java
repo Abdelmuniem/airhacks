@@ -1,7 +1,9 @@
 package airhacks.gifts.boundary;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -24,6 +26,12 @@ public class CatalogResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Gift gifts() {
-        return new Gift(this.gift,13);
+        return new Gift(this.gift, 13);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void save(Gift gift) {
+        System.out.println("CatalogResource.save() " + gift);
     }
 }
